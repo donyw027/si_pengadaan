@@ -14,7 +14,13 @@ class Auth extends CI_Controller
     private function _has_login()
     {
         if ($this->session->has_userdata('login_session')) {
-            redirect('dashboard');
+            if (is_admin() == true || is_yys() == true) {
+                redirect('dashboard');
+            } elseif (is_tu() == true) {
+                redirect('dashboard_tu');
+            } elseif (is_kepsek() == true) {
+                redirect('dashboard_kepsek');
+            }
         }
     }
 
@@ -26,7 +32,7 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('password', 'Password', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['title'] = 'Login | Reminder PKWT AKT';
+            $data['title'] = 'Login | SI Pengadaan';
             $this->template->load('templates/auth', 'auth/login', $data);
         } else {
             $input = $this->input->post(null, true);
@@ -44,6 +50,8 @@ class Auth extends CI_Controller
                             'user'  => $user_db['id_user'],
                             'nama'  => $user_db['nama'],
                             'email'  => $user_db['email'],
+                            'no_telp'  => $user_db['no_telp'],
+
                             'role'  => $user_db['role'],
                             'timestamp' => time()
                         ];
@@ -72,16 +80,16 @@ class Auth extends CI_Controller
     public function logout()
     {
         $yang_login = $this->session->userdata('login_session')['nama'];
-            $tgl = date('d M Y | H:i');
-            $data_log = [
-                'tanggal'       => $tgl,
-                'aksi'       => 'Logout dari sistem informasi',
-                'aktor'       => $yang_login
-            ];
-            $this->admin->insert('log_s', $data_log);
+        $tgl = date('d M Y | H:i');
+        $data_log = [
+            'tanggal'       => $tgl,
+            'aksi'       => 'Logout dari sistem informasi',
+            'aktor'       => $yang_login
+        ];
+        $this->admin->insert('log_s', $data_log);
         $this->session->unset_userdata('login_session');
 
-        
+
 
         set_pesan('anda telah berhasil logout');
         redirect('auth');

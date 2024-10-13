@@ -58,81 +58,33 @@
 
             <!-- Nav Item - Dashboard -->
             <?php
-            if (is_tk1() == true) { ?>
+            if (is_admin() == true) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('dashboard'); ?>">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard (TK1)</span>
+                        <span>Dashboard (SU)</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider">
+
+            <?php } ?>
+
+            <?php
+            if (is_tu() == true) { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('dashboard'); ?>">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard (TU)</span>
                     </a>
                 </li>
             <?php } ?>
 
             <?php
-            if (is_tk2() == true) { ?>
+            if (is_kepsek() == true) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('dashboard'); ?>">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard (TK2)</span>
-                    </a>
-                </li>
-            <?php } ?>
-
-            <?php
-            if (is_sd1() == true) { ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('dashboard'); ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard (SD1)</span>
-                    </a>
-                </li>
-            <?php } ?>
-
-            <?php
-            if (is_sd2() == true) { ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('dashboard'); ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard (SD2)</span>
-                    </a>
-                </li>
-            <?php } ?>
-
-            <?php
-            if (is_smp1() == true) { ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('dashboard'); ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard (SMP1)</span>
-                    </a>
-                </li>
-            <?php } ?>
-
-            <?php
-            if (is_smp2() == true) { ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('dashboard'); ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard (SMP2)</span>
-                    </a>
-                </li>
-            <?php } ?>
-
-            <?php
-            if (is_sma1() == true) { ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('dashboard'); ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard (SMA1)</span>
-                    </a>
-                </li>
-            <?php } ?>
-
-            <?php
-            if (is_sma2() == true) { ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('dashboard'); ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard (sma2)</span>
+                        <span>Dashboard (KS)</span>
                     </a>
                 </li>
             <?php } ?>
@@ -145,7 +97,11 @@
                         <span>Dashboard (YYS)</span>
                     </a>
                 </li>
+                <hr class="sidebar-divider">
+
             <?php } ?>
+
+
 
 
 
@@ -159,35 +115,28 @@
 
 
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Data Master
-            </div>
 
 
-
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="true" aria-controls="collapseMaster">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Data Master</span>
-                </a>
-                <div id="collapseMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-light py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Master Data</h6>
-                        <a class="collapse-item" href="<?= base_url('kategori'); ?>">Coa</a>
-                        <a class="collapse-item" href="<?= base_url('merk'); ?>">Acc Permintaan</a>
-                        <a class="collapse-item" href="<?= base_url('kategori'); ?>">Reject Permintaan</a>
-                        <a class="collapse-item" href="<?= base_url('kategori'); ?>">TTD</a>
-
-                    </div>
+            <?php if (is_admin() == true || is_yys() == true) { ?>
+                <div class="sidebar-heading">
+                    Data Master
                 </div>
-            </li>
-            <?php  ?>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="true" aria-controls="collapseMaster">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Data Master</span>
+                    </a>
+                    <div id="collapseMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-light py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Master Data</h6>
+                            <a class="collapse-item" href="<?= base_url('kategori'); ?>">Coa</a>
+                            <a class="collapse-item" href="<?= base_url('merk'); ?>">Acc Permintaan</a>
+                            <a class="collapse-item" href="<?= base_url('kategori'); ?>">Reject Permintaan</a>
+                        </div>
+                    </div>
+                </li>
+            <?php }  ?>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -197,33 +146,68 @@
                 Transaksi
             </div>
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link pb-0" href="<?= base_url('dataaset'); ?>">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pengadaan Barang</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Request Pengadaan </span>
-                </a>
-            </li>
+            <?php if (is_tu() == true) { ?>
 
-            <li class="nav-item">
-                <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Konfirmasi Penerimaan </span>
-                </a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Riwayat Permintaan </span>
-                </a>
-            </li>
+
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('dataaset'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Permintaan Pengadaan</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Konfirmasi Penerimaan </span>
+                    </a>
+                </li>
+            <?php
+            }
+            ?>
+
+            <?php if (is_kepsek() == true) { ?>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Approval Request</span>
+                    </a>
+                </li>
+            <?php } ?>
+
+            <?php if (is_tu() == true || is_kepsek() == true) { ?>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Catatan Permintaan</span>
+                    </a>
+                </li>
+            <?php } ?>
+
+            <?php if (is_yys() == true || is_admin() == true) { ?>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Approval Data Permintaan</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Pengadaan Barang</span>
+                    </a>
+                </li>
+            <?php } ?>
+
+
+
             <br>
 
             <hr class="sidebar-divider">
@@ -231,18 +215,44 @@
                 Reporting
             </div>
 
-            <li class="nav-item">
-                <a class="nav-link pb-0" href="<?= base_url('dataaset/semuaaset'); ?>">
-                    <i class="fas fa-fw fa-print"></i>
-                    <span>Lap. Pengadaan Barang</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link pb-0" href="<?= base_url('datadisposal/semuadisposal'); ?>">
-                    <i class="fas fa-fw fa-print"></i>
-                    <span>Lap. Detail Permintaan </span>
-                </a>
-            </li><br>
+            <?php if (is_tu() == true || is_kepsek() == true) { ?>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Data Permintaan</span>
+                    </a>
+                </li>
+            <?php } ?>
+
+            <?php if (is_admin() == true || is_yys() == true) { ?>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('dataaset/semuaaset'); ?>">
+                        <i class="fas fa-fw fa-print"></i>
+                        <span>Lap. Permintaan Barang</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('datadisposal/semuadisposal'); ?>">
+                        <i class="fas fa-fw fa-print"></i>
+                        <span>Lap. Detail Permintaan </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('dataaset/semuaaset'); ?>">
+                        <i class="fas fa-fw fa-print"></i>
+                        <span>Lap. Pengadaan Barang</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('datadisposal/semuadisposal'); ?>">
+                        <i class="fas fa-fw fa-print"></i>
+                        <span>Lap. Detail Pengadaan </span>
+                    </a>
+                </li>
+            <?php } ?>
+            <br>
 
 
 
@@ -261,6 +271,14 @@
                         <span>Log Sistem</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('user/log'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Approval Log</span>
+                    </a>
+                </li>
+
 
                 <!-- Nav Item -->
                 <li class="nav-item">

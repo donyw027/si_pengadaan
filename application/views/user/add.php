@@ -60,9 +60,9 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <label class="col-md-4 text-md-right" for="no_telp">Nomor Telepon</label>
+                    <label class="col-md-4 text-md-right" for="no_telp">Unit</label>
                     <div class="col-md-6">
-                        <input value="<?= set_value('no_telp'); ?>" type="text" id="no_telp" name="no_telp" class="form-control" placeholder="Nomor Telepon">
+                        <input value="<?= set_value('no_telp'); ?>" type="text" id="no_telp" name="no_telp" class="form-control" placeholder="Unit">
                         <?= form_error('no_telp', '<span class="text-danger small">', '</span>'); ?>
                     </div>
                 </div>
@@ -71,10 +71,10 @@
                     <div class="col-md-6">
                         <div class="custom-control custom-radio">
                             <input <?= set_radio('role', 'admin'); ?> value="admin" type="radio" id="admin" name="role" class="custom-control-input">
-                            <label class="custom-control-label" for="admin">Admin</label>
+                            <label class="custom-control-label" for="admin">Super User</label>
                         </div>
 
-                        <div class="custom-control custom-radio">
+                        <!-- <div class="custom-control custom-radio">
                             <input <?= set_radio('role', 'tk1'); ?> value="tk1" type="radio" id="tk1" name="role" class="custom-control-input">
                             <label class="custom-control-label" for="tk1">TK1</label>
                         </div>
@@ -105,10 +105,20 @@
                         <div class="custom-control custom-radio">
                             <input <?= set_radio('role', 'sma2'); ?> value="sma2" type="radio" id="sma2" name="role" class="custom-control-input">
                             <label class="custom-control-label" for="sma2">SMA2</label>
-                        </div>
+                        </div> -->
                         <div class="custom-control custom-radio">
                             <input <?= set_radio('role', 'yys'); ?> value="yys" type="radio" id="yys" name="role" class="custom-control-input">
-                            <label class="custom-control-label" for="yys">YAYASAN</label>
+                            <label class="custom-control-label" for="yys">Yayasan</label>
+                        </div>
+
+                        <div class="custom-control custom-radio">
+                            <input <?= set_radio('role', 'kepsek'); ?> value="kepsek" type="radio" id="kepsek" name="role" class="custom-control-input">
+                            <label class="custom-control-label" for="kepsek">Kepala Sekolah</label>
+                        </div>
+
+                        <div class="custom-control custom-radio">
+                            <input <?= set_radio('role', 'tu'); ?> value="tu" type="radio" id="tu" name="role" class="custom-control-input">
+                            <label class="custom-control-label" for="tu">Tata Usaha</label>
                         </div>
 
                         <?= form_error('role', '<span class="text-danger small">', '</span>'); ?>

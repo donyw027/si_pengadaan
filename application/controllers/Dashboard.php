@@ -31,7 +31,12 @@ class Dashboard extends CI_Controller
 
         $data['user'] = $this->admin->count('user');
 
-
-        $this->template->load('templates/dashboard', 'dashboard', $data);
+        if (is_admin() == true || is_yys() == true) {
+            $this->template->load('templates/dashboard', 'dashboard', $data);
+        } elseif (is_tu() == true) {
+            $this->template->load('templates/dashboard', 'dashboard_tu', $data);
+        } elseif (is_kepsek() == true) {
+            $this->template->load('templates/dashboard', 'dashboard_kepsek', $data);
+        }
     }
 }

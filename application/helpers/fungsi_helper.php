@@ -23,132 +23,6 @@ function is_admin()
     return $status;
 }
 
-function is_admin1()
-{
-    $ci = get_instance();
-    $role = $ci->session->userdata('login_session')['email'];
-
-    $status = true;
-
-    if ($role != 'IT') {
-        $status = false;
-    }
-
-    return $status;
-}
-
-function is_tk1()
-{
-    $ci = get_instance();
-    $role = $ci->session->userdata('login_session')['role'];
-
-    $status = true;
-
-    if ($role != 'tk1') {
-        $status = false;
-    }
-
-    return $status;
-}
-
-function is_tk2()
-{
-    $ci = get_instance();
-    $role = $ci->session->userdata('login_session')['role'];
-
-    $status = true;
-
-    if ($role != 'tk2') {
-        $status = false;
-    }
-
-    return $status;
-}
-
-function is_sd1()
-{
-    $ci = get_instance();
-    $role = $ci->session->userdata('login_session')['role'];
-
-    $status = true;
-
-    if ($role != 'sd1') {
-        $status = false;
-    }
-
-    return $status;
-}
-
-function is_sd2()
-{
-    $ci = get_instance();
-    $role = $ci->session->userdata('login_session')['role'];
-
-    $status = true;
-
-    if ($role != 'sd2') {
-        $status = false;
-    }
-
-    return $status;
-}
-
-function is_smp1()
-{
-    $ci = get_instance();
-    $role = $ci->session->userdata('login_session')['role'];
-
-    $status = true;
-
-    if ($role != 'smp1') {
-        $status = false;
-    }
-
-    return $status;
-}
-
-function is_smp2()
-{
-    $ci = get_instance();
-    $role = $ci->session->userdata('login_session')['role'];
-
-    $status = true;
-
-    if ($role != 'smp2') {
-        $status = false;
-    }
-
-    return $status;
-}
-
-function is_sma1()
-{
-    $ci = get_instance();
-    $role = $ci->session->userdata('login_session')['role'];
-
-    $status = true;
-
-    if ($role != 'sma1') {
-        $status = false;
-    }
-
-    return $status;
-}
-
-function is_sma2()
-{
-    $ci = get_instance();
-    $role = $ci->session->userdata('login_session')['role'];
-
-    $status = true;
-
-    if ($role != 'sma2') {
-        $status = false;
-    }
-
-    return $status;
-}
-
 function is_yys()
 {
     $ci = get_instance();
@@ -157,6 +31,34 @@ function is_yys()
     $status = true;
 
     if ($role != 'yys') {
+        $status = false;
+    }
+
+    return $status;
+}
+
+function is_kepsek()
+{
+    $ci = get_instance();
+    $role = $ci->session->userdata('login_session')['role'];
+
+    $status = true;
+
+    if ($role != 'kepsek') {
+        $status = false;
+    }
+
+    return $status;
+}
+
+function is_tu()
+{
+    $ci = get_instance();
+    $role = $ci->session->userdata('login_session')['role'];
+
+    $status = true;
+
+    if ($role != 'tu') {
         $status = false;
     }
 
