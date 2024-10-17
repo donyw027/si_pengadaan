@@ -12,7 +12,13 @@ class Admin_model extends CI_Model
         }
     }
 
-    public function log_desc() {
+    public function get_where($table, $where)
+    {
+        return $this->db->get_where($table, $where);
+    }
+
+    public function log_desc()
+    {
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get('log_s');
         return $query->result_array();
@@ -34,41 +40,48 @@ class Admin_model extends CI_Model
         return $this->db->delete($table, [$pk => $id]);
     }
 
-    public function get_all_payrolls() {
+    public function get_all_payrolls()
+    {
         $this->db->select('*');
         $this->db->from('payroll');
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function get_all_workingdays() {
+    public function get_all_workingdays()
+    {
         $this->db->select('*');
         $this->db->from('workingdays');
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function insert_batch($data) {
+    public function insert_batch($data)
+    {
         $this->db->insert_batch('payroll', $data);
     }
 
-    public function insert_batch1($data) {
+    public function insert_batch1($data)
+    {
         $this->db->insert_batch('workingdays', $data);
     }
 
-    function get_payroll_by_id($id) {
+    function get_payroll_by_id($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('payroll');
         return $query->row(); // Mengambil satu baris hasil
     }
 
-    function get_workingdays_by_id($id) {
+    function get_workingdays_by_id($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('workingdays');
         return $query->row(); // Mengambil satu baris hasil
     }
 
-    public function get_payroll_by_employee_id($employee_id) {
+    public function get_payroll_by_employee_id($employee_id)
+    {
         $this->db->select('*');
         $this->db->from('payroll');
         $this->db->where('nik', $employee_id);
@@ -76,7 +89,8 @@ class Admin_model extends CI_Model
         return $query->row();
     }
 
-    public function get_workingdays_by_employee_id($employee_id) {
+    public function get_workingdays_by_employee_id($employee_id)
+    {
         $this->db->select('*');
         $this->db->from('workingdays');
         $this->db->where('nik', $employee_id);
@@ -193,7 +207,8 @@ class Admin_model extends CI_Model
         return $hasil;
     }
 
-    public function getNamaHrd() {
+    public function getNamaHrd()
+    {
         $query = $this->db->query("SELECT nama_hrd FROM pkwt");
         return $query->result();
     }

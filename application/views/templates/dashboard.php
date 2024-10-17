@@ -123,21 +123,41 @@
                 </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="true" aria-controls="collapseMaster">
+                    <!-- <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="true" aria-controls="collapseMaster">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Data Master</span>
-                    </a>
-                    <div id="collapseMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    </a> -->
+                    <!-- <div id="collapseMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-light py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Master Data</h6>
-                            <a class="collapse-item" href="<?= base_url('kategori'); ?>">Coa</a>
+                            <a class="collapse-item" href="<?= base_url('coa'); ?>">Coa</a>
                             <a class="collapse-item" href="<?= base_url('merk'); ?>">Acc Permintaan</a>
                             <a class="collapse-item" href="<?= base_url('kategori'); ?>">Reject Permintaan</a>
                         </div>
-                    </div>
+                    </div> -->
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('coa'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Coa</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('dataaset'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Acc Permintaan</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('dataaset'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Reject Permintaan</span>
+                    </a>
                 </li>
             <?php }  ?>
-
+            <br>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -152,7 +172,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('dataaset'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('request'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Permintaan Pengadaan</span>
                     </a>
@@ -172,7 +192,7 @@
             <?php if (is_kepsek() == true) { ?>
 
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('dpermintaan/approve_permintaan'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Approval Request</span>
                     </a>
@@ -192,7 +212,7 @@
             <?php if (is_yys() == true || is_admin() == true) { ?>
 
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('dpermintaan/approve_permintaan'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Approval Data Permintaan</span>
                     </a>
@@ -218,7 +238,7 @@
             <?php if (is_tu() == true || is_kepsek() == true) { ?>
 
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('dpermintaan'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Data Permintaan</span>
                     </a>
