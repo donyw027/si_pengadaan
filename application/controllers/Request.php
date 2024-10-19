@@ -91,12 +91,91 @@ class Request extends CI_Controller
             if ($this->admin->insert('log_s', $data_log)) {
 
                 set_pesan('data berhasil disimpan.');
-                redirect('dpermintaan');
+                redirect('request/pending');
             } else {
                 set_pesan('data gagal disimpan', false);
-                redirect('dpermintaan');
+                redirect('request');
             }
         }
+    }
+
+    public function catatan()
+    {
+        $data['title'] = "Catatan";
+
+        // var_dump($unit);
+        // die();
+
+        if (is_admin() == true || is_yys() == true) {
+            $data['catatan'] = $this->admin->get_notes_with_details();
+        } else {
+            $unit = $this->session->userdata('login_session')['no_telp'];
+            $data['catatan'] = $this->admin->get_notes_with_details($unit);
+        }
+
+
+        $this->template->load('templates/dashboard', 'catatan/data', $data);
+    }
+
+    public function AccYayasan()
+    {
+        $data['title'] = "ACC Yayasan";
+        $unit = $this->session->userdata('login_session')['no_telp'];
+
+        // Ambil data request dengan status 'acc request yayasan'
+        $this->db->select('*');
+        $this->db->from('request');
+        $this->db->where('status', 'Acc Yayasan');
+
+        // // Jika perlu, tambahkan filter berdasarkan unit
+        // $this->db->where('unit', $unit);
+
+        $query = $this->db->get();
+        $data['requests'] = $query->result();
+
+        $this->template->load('templates/dashboard', 'dpermintaan/accyys', $data);
+    }
+
+    public function pending()
+    {
+        $data['title'] = "Pending Request";
+        $unit = $this->session->userdata('login_session')['no_telp'];
+
+        // Ambil data request dengan status 'acc request yayasan'
+        $this->db->select('*');
+        $this->db->from('request');
+        if (is_tu() == true) {
+            $this->db->where('status', 'Pending Kepsek');
+        } elseif (is_kepsek() == true) {
+            $this->db->where('status', 'Pending yayasan');
+        }
+
+        // // Jika perlu, tambahkan filter berdasarkan unit
+        $this->db->where('unit', $unit);
+
+        $query = $this->db->get();
+        $data['requests'] = $query->result();
+
+        $this->template->load('templates/dashboard', 'dpermintaan/pending', $data);
+    }
+
+    public function RejectYayasan()
+    {
+        $data['title'] = "Reject Yayasan";
+        $unit = $this->session->userdata('login_session')['no_telp'];
+
+        // Ambil data request dengan status 'acc request yayasan'
+        $this->db->select('*');
+        $this->db->from('request');
+        $this->db->where('status', 'Rejected Yayasan');
+
+        // // Jika perlu, tambahkan filter berdasarkan unit
+        // $this->db->where('unit', $unit);
+
+        $query = $this->db->get();
+        $data['requests'] = $query->result();
+
+        $this->template->load('templates/dashboard', 'dpermintaan/rejectyys', $data);
     }
 
 
@@ -127,6 +206,63 @@ class Request extends CI_Controller
         $data['request_item'] = $this->db->query("SELECT * FROM `request_item` WHERE request_id = '$request_id'")->result();
 
         $this->template->load('templates/dashboard', 'request/detail', $data);
+    }
+
+    public function approve($request_id)
+    {
+        // Ambil data user yang sedang login
+        // $user = $this->session->userdata('login_session');
+        // // $role = $user['role'];
+
+        // Ubah status request berdasarkan role user
+        if (is_kepsek() == true) {
+            $status = 'Pending Yayasan';
+        } else if (is_yys() == true || is_admin() == true) {
+            $status = 'ACC Yayasan';
+        }
+
+        // Update status request di database
+        $this->db->where('request_id', $request_id);
+        $this->db->update('request', ['status' => $status]);
+
+        // Redirect kembali ke halaman approval dengan pesan sukses
+        $this->session->set_flashdata('pesan', 'Permintaan berhasil di-approve.');
+
+        redirect('dpermintaan/approve_permintaan');
+    }
+
+    public function reject()
+    {
+
+        // Ambil data dari form reject modal
+        $request_id = $this->input->post('request_id');
+        $note = $this->input->post('note');
+        $user_id = $this->session->userdata('login_session')['user'];
+        // var_dump($user_id);
+        // die();
+
+        // Data untuk tabel catatan
+        $data_note = [
+            'request_id' => $request_id,
+            'tgl_note' => date('Y-m-d H:i:s'),
+            'note' => $note,
+            'user_id' => $user_id
+        ];
+
+        // Simpan catatan ke database
+        $this->db->insert('catatan', $data_note);
+
+        // Update status request menjadi 'rejected'
+        $this->db->where('request_id', $request_id);
+        if (is_kepsek() == true) {
+            $this->db->update('request', ['status' => 'Rejected Kepsek']);
+        } elseif (is_yys() == true || is_admin() == true) {
+            $this->db->update('request', ['status' => 'Rejected Yayasan']);
+        }
+
+        // Redirect kembali dengan pesan
+        $this->session->set_flashdata('pesan', 'Permintaan ditolak.');
+        redirect('dpermintaan/approve_permintaan');
     }
 
 

@@ -12,6 +12,11 @@ class Admin_model extends CI_Model
         }
     }
 
+    public function insert_note($data)
+    {
+        return $this->db->insert('catatan', $data);
+    }
+
     public function get_where($table, $where)
     {
         return $this->db->get_where($table, $where);
@@ -39,6 +44,25 @@ class Admin_model extends CI_Model
     {
         return $this->db->delete($table, [$pk => $id]);
     }
+
+    public function get_notes_with_details($unit = null)
+    {
+        $this->db->select('catatan.*, request.unit, user.nama');
+        $this->db->from('catatan');
+        $this->db->join('request', 'catatan.request_id = request.request_id', 'left');
+        $this->db->join('user', 'catatan.user_id = user.id_user', 'left');
+
+        // Jika unit disediakan, tambahkan filter untuk unit tersebut
+        if ($unit !== null) {
+            $this->db->where('request.unit', $unit);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
+
 
     public function get_all_payrolls()
     {

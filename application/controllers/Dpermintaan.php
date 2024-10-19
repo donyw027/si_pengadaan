@@ -36,10 +36,10 @@ class Dpermintaan extends CI_Controller
 
         if (is_kepsek() == true) {
             $data['requests'] = $this->admin->get_where('request', ['unit' => $unit, 'status' => 'Pending Kepsek'])->result_array();
+            // $this->template->load('templates/dashboard', 'request/pending', $data);
         } elseif (is_yys() == true || is_admin() == true) {
             $data['requests'] = $this->admin->get_where('request', ['status' => 'Pending Yayasan'])->result_array();
         }
-
         $this->template->load('templates/dashboard', 'approve_permintaan/data', $data);
     }
 

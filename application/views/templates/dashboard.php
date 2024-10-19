@@ -20,6 +20,9 @@
     <!-- Datepicker -->
     <link href="<?= base_url(); ?>assets/vendor/daterangepicker/daterangepicker.css" rel="stylesheet">
 
+
+
+
     <!-- DataTables -->
     <link href="<?= base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets/vendor/datatables/buttons/css/buttons.bootstrap4.min.css" rel="stylesheet">
@@ -136,24 +139,31 @@
                         </div>
                     </div> -->
 
-                <li class="nav-item">
+                    <!-- <li class="nav-item">
                     <a class="nav-link pb-0" href="<?= base_url('coa'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Coa</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('dataaset'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('request/AccYayasan'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Acc Permintaan</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('dataaset'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('request/RejectYayasan'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Reject Permintaan</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('request/catatan'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Catatan Unit</span>
                     </a>
                 </li>
             <?php }  ?>
@@ -202,7 +212,13 @@
             <?php if (is_tu() == true || is_kepsek() == true) { ?>
 
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('request/pending'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Pending Request</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('request/catatan'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Catatan Permintaan</span>
                     </a>

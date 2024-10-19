@@ -56,6 +56,26 @@
                             }
                             ?></td>
                     </tr>
+                    <tr>
+                        <th style="width: 200px; background-color: #d5e5ff;">Status Pengajuan</th>
+                        <td>
+                            <?php
+                            if (!empty($request->status)) {
+                                echo $request->status;
+                            } else {
+                                echo "-";
+                            }
+                            ?>
+                        </td>
+                        <th style="width: 200px; background-color: #d5e5ff;">Total Estimasi Biaya</th>
+                        <td style="color: red;"><?php
+                                                if (!empty($request->total_estimasi_harga)) {
+                                                    echo 'Rp. ' .  number_format($request->total_estimasi_harga, 0, ',', '.');
+                                                } else {
+                                                    echo "-";
+                                                }
+                                                ?></td>
+                    </tr>
 
 
                 </table>
@@ -70,10 +90,13 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr style=" background-color: #d5e5ff;">
+                            <th>Kategori</th>
                             <th>Item</th>
-                            <th>Deskripsi</th>
+                            <th>Spesifikasi</th>
                             <th>Qty</th>
-                            <th>Remark</th>
+                            <th>Est Harga</th>
+                            <th>Sub Est Harga</th>
+                            <th>Alasan Pengajuan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,9 +104,13 @@
                             <?php foreach ($request_item as $index => $item) : ?>
                                 <tr>
                                     <td><?= $item->kategori; ?></td>
-                                    <td><?= $item->kategori; ?></td>
+                                    <td><?= $item->nama_item; ?></td>
+                                    <td><?= $item->spesifikasi; ?></td>
                                     <td><?= $item->qty; ?></td>
-                                    <td><?= $item->kategori; ?></td>
+                                    <td>Rp. <?= number_format($item->estimasi_harga, 0, ',', '.'); ?></td>
+                                    <td>Rp. <?= number_format($item->sub_estimasi_harga, 0, ',', '.'); ?></td>
+
+                                    <td><?= $item->alasan_permintaan; ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else : ?>
@@ -100,14 +127,52 @@
 
         </div>
 
-        <?php if (is_admin() == true || is_yys() == true || is_kepsek() == true) { ?>
 
-            <div style="text-align: right;">
-                <a style="margin: 0px; " href="<?= base_url('request/approve/' . $request->request_id); ?>" class="btn btn-success btn-sm">Approve</a>
-                <a style="margin: 20px;" href="<?= base_url('request/reject/' . $request->request_id); ?>" class="btn btn-danger btn-sm">Reject</a>
-            </div>
+        <?php if (is_admin() == true || is_yys() == true || is_kepsek() == true) : ?>
+            <?php if ($request->status == 'Pending Kepsek' || $request->status == 'Pending Yayasan') : ?>
+                <div style="text-align: right; margin: 20px">
+                    <a onclick="return confirm('Yakin ingin Approve Permintaan?')" href="<?= base_url('request/approve/' . $request->request_id); ?>" class="btn btn-success btn-sm">Approve</a>
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal" onclick="setRejectModal('<?= $request->request_id; ?>')">Reject</button>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
 
-        <?php } ?>
 
     </div>
 </div>
+
+
+<!-- Modal Reject -->
+<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="<?= base_url('Request/reject'); ?>" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rejectModalLabel">Reject Request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="note">Catatan Penolakan</label>
+                        <textarea class="form-control" id="note" name="note" rows="4" required></textarea>
+                    </div>
+                    <input type="hidden" id="request_id" name="request_id">
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function setRejectModal(requestId) {
+        document.getElementById('request_id').value = requestId;
+    }
+</script>

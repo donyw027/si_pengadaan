@@ -115,7 +115,12 @@
                             <div class="row form-group">
                                 <label class="col-3 text-md-right" for="kategori">Kategori</label>
                                 <div class="col-md-9">
-                                    <input value="<?= set_value('kategori'); ?>" type="text" id="kategori" name="kategori[]" class="form-control" placeholder="Masukan kategori">
+                                    <select value="<?= set_value('kategori'); ?>" type="text" id="kategori" name="kategori[]" class="form-control" placeholder="Masukan kategori">
+                                        <option value="Barang">Barang</option>
+                                        <option value="Jasa">Jasa</option>
+                                    </select>
+
+                                    <!-- <input value="<?= set_value('kategori'); ?>" type="text" id="kategori" name="kategori[]" class="form-control" placeholder="Masukan kategori"> -->
                                     <?= form_error('kategori[]', '<span class="text-danger small">', '</span>'); ?>
                                 </div>
                             </div>
@@ -220,7 +225,12 @@
                     <div class="row form-group">
                         <label class="col-3 text-md-right" for="kategori">Kategori</label>
                         <div class="col-md-9">
-                            <input type="text" name="kategori[]" class="form-control" placeholder="Masukan kategori">
+                         <select  id="kategori" name="kategori[]" class="form-control" placeholder="Masukan kategori">
+                                        <option value="Barang">Barang</option>
+                                        <option value="Jasa">Jasa</option>
+                                    </select>
+
+                       
                         </div>
                     </div>
                 </div>

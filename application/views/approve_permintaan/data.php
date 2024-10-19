@@ -26,10 +26,11 @@
                     <th width="30">No.</th>
                     <th>Request Id</th>
                     <th>tgl Pengajuan</th>
-                    <th>Status</th>
                     <th>Total Estimasi Harga</th>
+                    <th>Status</th>
 
-                    <th>Aksi</th>
+
+                    <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -39,13 +40,13 @@
                             <td><?= $key + 1; ?></td>
                             <td><a href="<?= base_url('request/detail_permintaan/') . $request['request_id'] ?>"><?= $request['request_id'] ?></a></td>
                             <td><?= $request['tgl_pengajuan']; ?></td>
-                            <td><?= $request['status']; ?></td>
                             <td><?= $request['total_estimasi_harga']; ?></td>
-                            <td>
+                            <td><?= $request['status']; ?></td>
+                            <!-- <td>
 
-                                <a href="<?= base_url('request/approve/' . $request['request_id']); ?>" class="btn btn-success btn-sm">Approve</a>
+                                <a onclick="return confirm('Yakin ingin Approve Permintaan?')" href="<?= base_url('request/approve/' . $request['request_id']); ?>" class="btn btn-success btn-sm">Approve</a>
                                 <a href="<?= base_url('request/reject/' . $request['request_id']); ?>" class="btn btn-danger btn-sm">Reject</a>
-                            </td>
+                            </td> -->
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

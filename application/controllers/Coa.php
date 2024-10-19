@@ -20,7 +20,7 @@ class Coa extends CI_Controller
         $data['title'] = "Coa";
         $role = $this->session->userdata('login_session')['role'];
 
-        if (is_admin() == true) {
+        if (is_admin() == true || is_yys() == true) {
             $data['coa'] = $this->admin->get('coa');
 
             $this->template->load('templates/dashboard', 'coa/data', $data);
