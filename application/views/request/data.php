@@ -192,7 +192,7 @@
 
                 <div class="row justify-content-center">
                     <div class="col-md-8 text-center">
-                        <button type="submit" class="btn btn-primary btn-icon-split" onclick="return confirm('Yakin ingin Simpan dan Print data?')">
+                        <button type="submit" class="btn btn-primary btn-icon-split" onclick="return confirm('Yakin ingin Simpan dan Ajukan data?')">
                             <span class="icon"><i class="fa fa-save"></i></span>
                             <span class="text">Simpan & Pengajuan</span>
                         </button>

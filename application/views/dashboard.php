@@ -87,7 +87,7 @@
                  <div class="row no-gutters align-items-center">
                      <div class="col mr-2">
                          <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> Request Approval Pengadaan Unit</div>
-                         <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $pending_yayasan; ?></div>
                      </div>
                      <div class="col-auto">
                          <i class="fas fa-folder fa-2x text-gray-300"></i>
@@ -103,8 +103,8 @@
              <div class="card-body">
                  <div class="row no-gutters align-items-center">
                      <div class="col mr-2">
-                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">ACC Permintaan Pengadaan</div>
-                         <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Data ACC Permintaan </div>
+                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $acc_yayasan; ?></div>
                      </div>
                      <div class="col-auto">
                          <i class="fas fa-folder fa-2x text-gray-300"></i>
@@ -120,10 +120,10 @@
              <div class="card-body">
                  <div class="row no-gutters align-items-center">
                      <div class="col mr-2">
-                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reject Permintaan Pengadaan</div>
+                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Data Reject Permintaan </div>
                          <?php date_default_timezone_set("Asia/Jakarta"); ?>
 
-                         <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $reject_yayasan; ?></div>
                      </div>
                      <div class="col-auto">
                          <i class="fas fa-folder fa-2x text-gray-300"></i>
@@ -141,7 +141,7 @@
                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pengadaan Barang</div>
                          <?php date_default_timezone_set("Asia/Jakarta"); ?>
 
-                         <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $pengadaan; ?></div>
                      </div>
                      <div class="col-auto">
                          <i class="fas fa-folder fa-2x text-gray-300"></i>

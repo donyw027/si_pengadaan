@@ -146,6 +146,7 @@ class Request extends CI_Controller
         $this->db->from('request');
         if (is_tu() == true) {
             $this->db->where('status', 'Pending Kepsek');
+            $this->db->or_where('status', 'Pending Yayasan');
         } elseif (is_kepsek() == true) {
             $this->db->where('status', 'Pending yayasan');
         }
@@ -157,6 +158,26 @@ class Request extends CI_Controller
         $data['requests'] = $query->result();
 
         $this->template->load('templates/dashboard', 'dpermintaan/pending', $data);
+    }
+
+    public function decision_log()
+    {
+        $data['title'] = 'Approval Log';
+
+        // Ambil unit dari session login
+        $unit = $this->session->userdata('login_session')['no_telp'];
+
+
+        // Jika admin atau yayasan, tampilkan semua data
+        if (is_admin() || is_yys()) {
+            $data['decision_logs'] = $this->admin->get_decision_logs();
+        } else {
+            // Jika user kepsek, hanya tampilkan data sesuai unit
+            $data['decision_logs'] = $this->admin->get_decision_logs($unit);
+        }
+
+        // Load view untuk menampilkan data
+        $this->template->load('templates/dashboard', 'decision_log/data', $data);
     }
 
     public function RejectYayasan()
@@ -210,9 +231,7 @@ class Request extends CI_Controller
 
     public function approve($request_id)
     {
-        // Ambil data user yang sedang login
-        // $user = $this->session->userdata('login_session');
-        // // $role = $user['role'];
+
 
         // Ubah status request berdasarkan role user
         if (is_kepsek() == true) {
@@ -224,6 +243,18 @@ class Request extends CI_Controller
         // Update status request di database
         $this->db->where('request_id', $request_id);
         $this->db->update('request', ['status' => $status]);
+
+        // Insert log into decision_log
+        $data_log = [
+            'request_id' => $request_id,
+            'status' => $status,
+            'user_id' => $this->session->userdata('login_session')['user'], // Nama user yang approve
+            'tgl' => date('Y-m-d | H:i:s'), // Waktu saat ini
+        ];
+
+        // Insert ke tabel decision_log
+        $this->db->insert('decision_log', $data_log);
+
 
         // Redirect kembali ke halaman approval dengan pesan sukses
         $this->session->set_flashdata('pesan', 'Permintaan berhasil di-approve.');
@@ -244,7 +275,7 @@ class Request extends CI_Controller
         // Data untuk tabel catatan
         $data_note = [
             'request_id' => $request_id,
-            'tgl_note' => date('Y-m-d H:i:s'),
+            'tgl_note' => date('Y-m-d | H:i:s'),
             'note' => $note,
             'user_id' => $user_id
         ];
@@ -255,10 +286,23 @@ class Request extends CI_Controller
         // Update status request menjadi 'rejected'
         $this->db->where('request_id', $request_id);
         if (is_kepsek() == true) {
-            $this->db->update('request', ['status' => 'Rejected Kepsek']);
+            $status = 'Rejected Kepsek';
+            $this->db->update('request', ['status' => $status]);
         } elseif (is_yys() == true || is_admin() == true) {
-            $this->db->update('request', ['status' => 'Rejected Yayasan']);
+            $status = 'Rejected Yayasan';
+            $this->db->update('request', ['status' => $status]);
         }
+
+        $data_log = [
+            'request_id' => $request_id,
+            'status' => $status,
+            'user_id' => $this->session->userdata('login_session')['user'], // Nama user yang approve
+            'tgl' => date('Y-m-d | H:i:s'), // Waktu saat ini
+        ];
+
+        // Insert ke tabel decision_log
+        $this->db->insert('decision_log', $data_log);
+
 
         // Redirect kembali dengan pesan
         $this->session->set_flashdata('pesan', 'Permintaan ditolak.');

@@ -61,6 +61,22 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
+    public function get_decision_logs($unit = null)
+    {
+        // Query untuk join tabel decision_log, request, dan user
+        $this->db->select('decision_log.id, decision_log.request_id, decision_log.status, decision_log.tgl, user.nama AS nama, request.unit');
+        $this->db->from('decision_log');
+        $this->db->join('request', 'decision_log.request_id = request.request_id', 'left');
+        $this->db->join('user', 'decision_log.user_id = user.id_user', 'left');
+
+        // Jika unit disediakan, tambahkan filter untuk unit tersebut
+        if ($unit !== null) {
+            $this->db->where('request.unit', $unit);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 
 
@@ -139,6 +155,29 @@ class Admin_model extends CI_Model
         return $this->db->count_all($table);
     }
 
+    public function hitung_data($table, $condition = null)
+    {
+        // Jika kondisi diberikan, tambahkan klausa WHERE
+        if ($condition !== null) {
+            $this->db->where($condition);
+        }
+
+        // Hitung jumlah baris
+        return $this->db->count_all_results($table);
+    }
+
+    public function count_where_in_with_unit($table, $column, $values, $unit)
+    {
+        $this->db->where_in($column, $values);  // Kondisi untuk status
+        $this->db->where('unit', $unit);        // Kondisi untuk unit
+        return $this->db->count_all_results($table);
+    }
+
+    public function count_catatan_with_request_id_like_unit($table, $unit)
+    {
+        $this->db->like('request_id', $unit);  // Menggunakan LIKE untuk request_id yang mengandung unit
+        return $this->db->count_all_results($table);  // Menghitung jumlah data
+    }
 
     public function laporan($table, $mulai, $akhir)
     {

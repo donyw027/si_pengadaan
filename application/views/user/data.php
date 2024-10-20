@@ -28,7 +28,7 @@
                     <th>Nama</th>
                     <th>Username</th>
                     <th>Jabatan</th>
-                    <th>No. telp</th>
+                    <th>Unit</th>
                     <th>Role</th>
                     <th>Aksi</th>
                 </tr>
@@ -38,7 +38,7 @@
                 $no = 1;
                 if ($users) :
                     foreach ($users as $user) :
-                        ?>
+                ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td>
@@ -56,7 +56,7 @@
                             </td>
                         </tr>
                     <?php endforeach;
-                    else : ?>
+                else : ?>
                     <tr>
                         <td colspan="8" class="text-center">Silahkan tambahkan user baru</td>
                     </tr>

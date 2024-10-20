@@ -46,9 +46,9 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <label class="col-md-4 text-md-right" for="no_telp">Nomor Telepon</label>
+                    <label class="col-md-4 text-md-right" for="no_telp">Unit</label>
                     <div class="col-md-6">
-                        <input value="<?= set_value('no_telp', $user['no_telp']); ?>" type="text" id="no_telp" name="no_telp" class="form-control" placeholder="Nomor Telepon">
+                        <input value="<?= set_value('no_telp', $user['no_telp']); ?>" type="text" id="no_telp" name="no_telp" class="form-control" placeholder="Unit">
                         <?= form_error('no_telp', '<span class="text-danger small">', '</span>'); ?>
                     </div>
                 </div>
@@ -79,18 +79,19 @@
                             <input <?= $user['role'] == 'sdm' ? 'checked' : ''; ?> <?= set_radio('role', 'sdm'); ?> value="sdm" type="radio" id="sdm" name="role" class="custom-control-input">
                             <label class="custom-control-label" for="sdm">Sdm</label>
                         </div>
+                        -->
                         <div class="custom-control custom-radio">
-                            <input <?= $user['role'] == 'sekretariat' ? 'checked' : ''; ?> <?= set_radio('role', 'sekretariat'); ?> value="sekretariat" type="radio" id="sekretariat" name="role" class="custom-control-input">
-                            <label class="custom-control-label" for="sekretariat">Sekretariat</label>
+                            <input <?= $user['role'] == 'yys' ? 'checked' : ''; ?> <?= set_radio('role', 'yys'); ?> value="yys" type="radio" id="yys" name="role" class="custom-control-input">
+                            <label class="custom-control-label" for="yys">Yayasan</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input <?= $user['role'] == 'akunting' ? 'checked' : ''; ?> <?= set_radio('role', 'akunting'); ?> value="akunting" type="radio" id="akunting" name="role" class="custom-control-input">
-                            <label class="custom-control-label" for="akunting">Akunting</label>
+                            <input <?= $user['role'] == 'tu' ? 'checked' : ''; ?> <?= set_radio('role', 'tu'); ?> value="tu" type="radio" id="tu" name="role" class="custom-control-input">
+                            <label class="custom-control-label" for="tu">Tata Usaha</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input <?= $user['role'] == 'yayasan' ? 'checked' : ''; ?> <?= set_radio('role', 'yayasan'); ?> value="yayasan" type="radio" id="yayasan" name="role" class="custom-control-input">
-                            <label class="custom-control-label" for="yayasan">Yayasan</label>
-                        </div> -->
+                            <input <?= $user['role'] == 'kepsek' ? 'checked' : ''; ?> <?= set_radio('role', 'kepsek'); ?> value="kepsek" type="radio" id="kepsek" name="role" class="custom-control-input">
+                            <label class="custom-control-label" for="kepsek">Kepala Sekolah</label>
+                        </div>
 
                         <?= form_error('role', '<span class="text-danger small">', '</span>'); ?>
                     </div>

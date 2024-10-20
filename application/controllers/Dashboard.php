@@ -16,7 +16,7 @@ class Dashboard extends CI_Controller
         $data['title'] = "Dashboard";
 
 
-        $role = $this->session->userdata('login_session')['role'];
+        $unit = $this->session->userdata('login_session')['no_telp'];
 
         $query_log = $this->db->query("SELECT tanggal, aksi ,aktor FROM log_s ORDER BY id DESC LIMIT 1");
         $data['log'] = $query_log->row();
@@ -25,6 +25,26 @@ class Dashboard extends CI_Controller
         // $data['kategoriaset'] = $this->db->query("SELECT sum(tb_aset.jumlah_unit) AS totalaset,tb_kategori.kategori FROM tb_kategori left JOIN tb_aset on tb_kategori.kategori = tb_aset.kategori GROUP BY tb_kategori.kategori")->result_array();
 
         // $data['kategoridisposal'] = $this->db->query("SELECT sum(tb_disposal.jumlah_unit) AS totalaset,tb_kategori.kategori FROM tb_kategori left JOIN tb_disposal on tb_kategori.kategori = tb_disposal.kategori GROUP BY tb_kategori.kategori")->result_array();
+
+
+        $data['pending_yayasan'] = $this->admin->hitung_data('request', ['status' => 'Pending Yayasan']);
+        $data['reject_yayasan'] = $this->admin->hitung_data('request', ['status' => 'Rejected Yayasan']);
+        $data['acc_yayasan'] = $this->admin->hitung_data('request', ['status' => 'ACC Yayasan']);
+        $data['pengadaan'] = $this->admin->hitung_data('pengadaan');
+
+
+        $data['pending_kepsek'] = $this->admin->count_where_in_with_unit('request', 'status', ['Pending Kepsek'], $unit);
+        $data['pending_kepsek_yys'] = $this->admin->count_where_in_with_unit('request', 'status', ['Pending Yayasan'], $unit);
+        $data['reject_kepsek'] = $this->admin->count_where_in_with_unit('request', 'status', ['Rejected Kepsek'], $unit);
+        $data['acc_kepsek'] = $this->admin->count_where_in_with_unit('request', 'status', ['Rejected Kepsek'], $unit);
+        $data['total_permintaan'] = $this->admin->hitung_data('request', ['unit' => $unit]);
+
+
+
+        $data['pending_tu'] = $this->admin->count_where_in_with_unit('request', 'status', ['Pending Yayasan', 'Pending Kepsek'], $unit);
+        $data['acc_tu'] = $this->admin->hitung_data('request', ['status' => 'ACC Yayasan', 'unit' => $unit]);
+        $data['reject_tu'] = $this->admin->count_where_in_with_unit('request', 'status', ['Rejected yayasan', 'Rejected kepsek'], $unit);
+        $data['catatan_tu'] = $this->admin->count_catatan_with_request_id_like_unit('catatan', $unit);
 
 
 

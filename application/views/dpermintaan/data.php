@@ -28,8 +28,9 @@
                     <th>tgl Pengajuan</th>
                     <th>Status</th>
                     <th>Total Estimasi Harga</th>
-
-                    <th>Aksi</th>
+                    <?php if (is_admin() == true) { ?>
+                        <th>Aksi</th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -41,12 +42,14 @@
                             <td><?= $request['tgl_pengajuan']; ?></td>
                             <td><?= $request['status']; ?></td>
                             <td>Rp. <?= number_format($request['total_estimasi_harga'], 0, ',', '.'); ?></td>
+                            <?php if (is_admin() == true) { ?>
+                                <td>
 
-                            <td>
+                                    <!-- <a href="<?= base_url('dpermintaan/edit/') . $request['id'] ?>" class="btn btn-circle btn-sm btn-warning"><i class="fa fa-fw fa-edit"></i></a> -->
+                                    <a onclick="return confirm('Yakin ingin menghapus data?')" href="<?= base_url('dpermintaan/delete/') . $request['id'] ?>" class="btn btn-circle btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i></a>
+                                </td>s
+                            <?php } ?>
 
-                                <a href="<?= base_url('dpermintaan/edit/') . $request['id'] ?>" class="btn btn-circle btn-sm btn-warning"><i class="fa fa-fw fa-edit"></i></a>
-                                <a onclick="return confirm('Yakin ingin menghapus data?')" href="<?= base_url('dpermintaan/delete/') . $request['id'] ?>" class="btn btn-circle btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i></a>
-                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

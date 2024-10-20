@@ -22,7 +22,7 @@
                         <td><?= userdata('email'); ?></td>
                     </tr>
                     <tr>
-                        <th>Nomor Telepon</th>
+                        <th>Unit</th>
                         <td><?= userdata('no_telp'); ?></td>
                     </tr>
                     <!-- <tr>
