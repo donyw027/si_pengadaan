@@ -229,6 +229,58 @@ class Request extends CI_Controller
         $this->template->load('templates/dashboard', 'request/detail', $data);
     }
 
+    public function approve_pengadaan($request_id)
+    {
+        $status = 'ACC Yayasan';
+
+        // Update status request di database
+        $this->db->where('request_id', $request_id);
+        $this->db->update('request', ['status' => $status]);
+
+        // Insert log into decision_log
+        $data_log = [
+            'request_id' => $request_id,
+            'status' => $status,
+            'user_id' => $this->session->userdata('login_session')['user'], // Nama user yang approve
+            'tgl' => date('Y-m-d | H:i:s'), // Waktu saat ini
+        ];
+
+        // Insert ke tabel decision_log
+        $this->db->insert('decision_log', $data_log);
+
+        // Insert data ke tabel pengadaan
+        $data_pengadaan = [
+            'request_id' => $request_id,
+            'tgl_pengadaan' => date('Y-m-d'), // Tanggal pengadaan saat ini
+            'status_pengadaan' => 'Proses Pengadaan', // Status awal pengadaan
+            // 'tgl_diterima' => null // Tanggal diterima, akan diisi nanti saat barang diterima
+        ];
+        $this->db->insert('pengadaan', $data_pengadaan);
+
+
+        // Redirect kembali ke halaman approval dengan pesan sukses
+        $this->session->set_flashdata('pesan', 'Permintaan berhasil di-approve.');
+
+        redirect('dpermintaan/approve_permintaan');
+    }
+
+    public function pengadaan_list()
+    {
+        $data['title'] = 'Daftar Pengadaan';
+
+        // Ambil unit dari session
+        $unit = $this->session->userdata('login_session')['no_telp'];
+
+        // Panggil fungsi model dengan filter unit
+        if (is_admin() == true || is_yys() == true) {
+            $data['pengadaan'] = $this->admin->get_pengadaan_with_details();
+        } else {
+            $data['pengadaan'] = $this->admin->get_pengadaan_with_details($unit);
+        }
+
+        $this->template->load('templates/dashboard', 'pengadaan/data', $data);
+    }
+
     public function approve($request_id)
     {
 

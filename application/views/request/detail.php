@@ -131,11 +131,22 @@
         <?php if (is_admin() == true || is_yys() == true || is_kepsek() == true) : ?>
             <?php if ($request->status == 'Pending Kepsek' || $request->status == 'Pending Yayasan') : ?>
                 <div style="text-align: right; margin: 20px">
-                    <a onclick="return confirm('Yakin ingin Approve Permintaan?')" href="<?= base_url('request/approve/' . $request->request_id); ?>" class="btn btn-success btn-sm">Approve</a>
+                    <?php if (is_admin() == true || is_yys() == true) { ?>
+
+                    <?php } else { ?>
+                        <a onclick="return confirm('Yakin ingin Approve Permintaan?')" href="<?= base_url('request/approve/' . $request->request_id); ?>" class="btn btn-success btn-sm">Approve</a>
+                    <?php } ?>
                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal" onclick="setRejectModal('<?= $request->request_id; ?>')">Reject</button>
                 </div>
             <?php endif; ?>
         <?php endif; ?>
+
+        <?php if (is_tu() == true and $request->status == 'ACC Yayasan') { ?>
+            <div style="text-align: right; margin: 20px">
+                <a onclick="return confirm('Yakin ingin Approve Permintaan & Proses Pengadaan?')" href="<?= base_url('request/approve_pengadaan/' . $request->request_id); ?>" class="btn btn-success btn-sm">Konfirmasi Penerimaan</a>
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal" onclick="setRejectModal('<?= $request->request_id; ?>')">Pengaduan</button>
+            </div>
+        <?php  } ?>
 
 
     </div>

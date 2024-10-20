@@ -190,7 +190,7 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('request/pengadaan_list'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Konfirmasi Penerimaan </span>
                     </a>
@@ -241,7 +241,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('datadisposal'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('request/pengadaan_list'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Pengadaan Barang</span>
                     </a>
