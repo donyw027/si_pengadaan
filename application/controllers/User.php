@@ -28,9 +28,9 @@ class User extends CI_Controller
         $data['title'] = "Log Sistem";
         $role = $this->session->userdata('login_session')['role'];
 
-            $data['log'] = $this->admin->log_desc();
+        $data['log'] = $this->admin->log_desc();
 
-            $this->template->load('templates/dashboard', 'log/data', $data);
+        $this->template->load('templates/dashboard', 'log/data', $data);
     }
 
     private function _validasi($mode)
@@ -74,7 +74,8 @@ class User extends CI_Controller
                 'role'          => $input['role'],
                 'password'      => password_hash($input['password'], PASSWORD_DEFAULT),
                 'created_at'    => time(),
-                'foto'          => 'user.png'
+                'foto'          => 'user.png',
+                'mail_user'          => $input['mail_user']
             ];
 
             if ($this->admin->insert('user', $input_data)) {
@@ -103,7 +104,8 @@ class User extends CI_Controller
                 'username'      => $input['username'],
                 'email'         => $input['email'],
                 'no_telp'       => $input['no_telp'],
-                'role'          => $input['role']
+                'role'          => $input['role'],
+                'mail_user'          => $input['mail_user']
             ];
 
             if ($this->admin->update('user', 'id_user', $id, $input_data)) {

@@ -26,6 +26,7 @@ class Request extends CI_Controller
         } else {
             $input = $this->input->post(null, true);
             $unit = $this->session->userdata('login_session')['no_telp'];
+            $nama_user = $this->session->userdata('login_session')['nama'];
             $request_id = strtotime('now');
 
             $total_estimasi_harga = 0;
@@ -36,6 +37,8 @@ class Request extends CI_Controller
                 'unit'                  => $unit,
                 'tgl_pengajuan'         => $input['tgl_pengajuan'],
                 'status'                => 'Pending Kepsek',
+                'user_request'                => $nama_user
+
                 // Simpan total_estimasi_biaya di sini setelah dihitung di loop
             ];
 
@@ -258,6 +261,10 @@ class Request extends CI_Controller
         $this->db->insert('pengadaan', $data_pengadaan);
 
 
+        $this->kirim_email_acc_unit($request_id);
+
+
+
         // Redirect kembali ke halaman approval dengan pesan sukses
         $this->session->set_flashdata('pesan', 'Permintaan berhasil di-approve.');
 
@@ -273,8 +280,12 @@ class Request extends CI_Controller
 
         // Panggil fungsi model dengan filter unit
         if (is_admin() == true || is_yys() == true) {
+            $data['title'] = 'Daftar Pengadaan';
+
             $data['pengadaan'] = $this->admin->get_pengadaan_with_details();
         } else {
+            $data['title'] = 'Konfirmasi Daftar Pengadaan';
+
             $data['pengadaan'] = $this->admin->get_pengadaan_with_details($unit);
         }
 
@@ -307,11 +318,111 @@ class Request extends CI_Controller
         // Insert ke tabel decision_log
         $this->db->insert('decision_log', $data_log);
 
+        if ($status === 'Pending Yayasan') {
+            $this->kirim_email_to_acc_yayasan($request_id);
+        }
+
 
         // Redirect kembali ke halaman approval dengan pesan sukses
         $this->session->set_flashdata('pesan', 'Permintaan berhasil di-approve.');
 
         redirect('dpermintaan/approve_permintaan');
+    }
+
+    private function kirim_email_to_acc_yayasan($request_id)
+    {
+        $approve_by = $this->session->userdata('login_session')['nama'];
+
+        // Ambil data email dari tabel user
+        $this->db->select('mail_user');
+        $this->db->from('user');
+        $this->db->where('role', 'yys'); // Asumsikan role yayasan menggunakan nama 'yayasan'
+        $email_yayasan = $this->db->get()->row()->mail_user;
+
+        // Konfigurasi email
+        $this->load->library('email');
+        $this->email->from('testing@akt-id.com', 'Sistem Pengadaan Yayasan Diannanda');
+        $this->email->to($email_yayasan);
+        $this->email->subject('Pemberitahuan Permintaan Pengadaan Unit');
+
+        // Isi email
+        $message = "Permintaan Pengadaan dengan Request ID " . $request_id . " yang diajukan Tata Usaha telah di-ACC oleh Kepala Sekolah Unit. (Cek Request ID Dalam Sistem Pengadaan Untuk Approve/Reject Request) <br>Approve By : " . $approve_by . "<br><br> Message By SI Pengadaan Yayasan Diannanda";
+        $this->email->message($message);
+
+        // Kirim email
+        if ($this->email->send()) {
+            log_message('info', 'Email pemberitahuan berhasil dikirim ke yayasan');
+        } else {
+            log_message('error', 'Gagal mengirim email ke yayasan');
+        }
+    }
+
+    private function kirim_email_acc_unit($request_id)
+    {
+        $approve_by = $this->session->userdata('login_session')['nama'];
+
+        // Ambil unit dan email unit dari tabel request dan user
+        $this->db->select('request.unit, user.mail_user');
+        $this->db->from('request');
+        $this->db->join('user', 'user.no_telp = request.unit');  // Menyesuaikan kolom join sesuai tabel
+        $this->db->where('request.request_id', $request_id);
+        $unit_info = $this->db->get()->result_array();  // Mengambil sebagai array dari semua data
+
+        // Loop untuk mengirim email ke setiap email yang ditemukan
+        foreach ($unit_info as $unit) {
+            $email_unit = $unit['mail_user'];
+
+            // Konfigurasi email
+            $this->load->library('email');
+            $this->email->from('testing@akt-id.com', 'Sistem Pengadaan Yayasan Diannanda');
+            $this->email->to($email_unit);
+            $this->email->subject('Pemberitahuan ACC Permintaan Pengadaan');
+
+            // Isi email
+            $message = "Permintaan Pengadaan dengan Request ID " . $request_id . " telah di-ACC oleh Yayasan. (Dalam Proses Pengadaan) <br>Approve By : " . $approve_by . "<br><br> Message By SI Pengadaan Yayasan Diannanda";
+            $this->email->message($message);
+
+            // Kirim email
+            if ($this->email->send()) {
+                log_message('info', 'Email pemberitahuan berhasil dikirim ke unit yang mengajukan request');
+            } else {
+                log_message('error', 'Gagal mengirim email ke unit yang mengajukan request');
+            }
+        }
+    }
+
+    private function kirim_email_reject_unit($request_id)
+    {
+        $reject_by = $this->session->userdata('login_session')['nama'];
+
+        // Ambil unit dan email unit dari tabel request dan user
+        $this->db->select('request.unit, user.mail_user');
+        $this->db->from('request');
+        $this->db->join('user', 'user.no_telp = request.unit');  // Menyesuaikan kolom join sesuai tabel
+        $this->db->where('request.request_id', $request_id);
+        $unit_info = $this->db->get()->result_array();  // Mengambil sebagai array dari semua data
+
+        // Loop untuk mengirim email ke setiap email yang ditemukan
+        foreach ($unit_info as $unit) {
+            $email_unit = $unit['mail_user'];
+
+            // Konfigurasi email
+            $this->load->library('email');
+            $this->email->from('testing@akt-id.com', 'Sistem Pengadaan Yayasan Diannanda');
+            $this->email->to($email_unit);
+            $this->email->subject('Pemberitahuan REJECT Permintaan Pengadaan');
+
+            // Isi email
+            $message = "Permintaan Pengadaan dengan Request ID " . $request_id . " telah di-tolak oleh Yayasan. (Periksa Catatan Dalam Sistem)<br>Reject By : " . $reject_by . " <br> <br> Message By SI Pengadaan Yayasan Diannanda";
+            $this->email->message($message);
+
+            // Kirim email
+            if ($this->email->send()) {
+                log_message('info', 'Email pemberitahuan berhasil dikirim ke unit yang mengajukan request');
+            } else {
+                log_message('error', 'Gagal mengirim email ke unit yang mengajukan request');
+            }
+        }
     }
 
     public function reject()
@@ -343,6 +454,7 @@ class Request extends CI_Controller
         } elseif (is_yys() == true || is_admin() == true) {
             $status = 'Rejected Yayasan';
             $this->db->update('request', ['status' => $status]);
+            $this->kirim_email_reject_unit($request_id);
         }
 
         $data_log = [

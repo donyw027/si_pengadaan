@@ -30,6 +30,7 @@
                     <th>Jabatan</th>
                     <th>Unit</th>
                     <th>Role</th>
+                    <th>Email</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -49,6 +50,7 @@
                             <td><?= $user['email']; ?></td>
                             <td><?= $user['no_telp']; ?></td>
                             <td><?= $user['role']; ?></td>
+                            <td><?= $user['mail_user']; ?></td>
                             <td>
                                 <a href="<?= base_url('user/toggle/') . $user['id_user'] ?>" class="btn btn-circle btn-sm <?= $user['is_active'] ? 'btn-secondary' : 'btn-success' ?>" title="<?= $user['is_active'] ? 'Nonaktifkan User' : 'Aktifkan User' ?>"><i class="fa fa-fw fa-power-off"></i></a>
                                 <a href="<?= base_url('user/edit/') . $user['id_user'] ?>" class="btn btn-circle btn-sm btn-warning"><i class="fa fa-fw fa-edit"></i></a>

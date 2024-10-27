@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-primary">
-                    Data permintaan
+                    Data Pengadaan
                 </h4>
             </div>
             <!-- <div class="col-auto">
@@ -24,7 +24,7 @@
         <table class="table table-striped dt-responsive nowrap" id="dataTable">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <!-- <th>ID</th> -->
                     <th>Unit</th>
                     <th>Request ID</th>
                     <th>Tgl Pengajuan</th>
@@ -38,7 +38,7 @@
                 <?php if (!empty($pengadaan)): ?>
                     <?php foreach ($pengadaan as $p): ?>
                         <tr>
-                            <td><?= $p->id; ?></td>
+                            <!-- <td><?= $p->id; ?></td> -->
                             <td><?= $p->unit; ?></td>
                             <td><a href="<?= base_url('request/detail_permintaan/') . $p->request_id ?>"><?= $p->request_id ?></a></td>
                             <td><?= $p->tgl_pengajuan; ?></td>

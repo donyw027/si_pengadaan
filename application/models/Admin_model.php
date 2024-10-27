@@ -197,6 +197,24 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
+    public function count_konfirmasi_by_unit($unit)
+    {
+        $this->db->select('COUNT(pengadaan.id) as jumlah_pengadaan');
+        $this->db->from('pengadaan');
+        $this->db->join('request', 'pengadaan.request_id = request.request_id'); // Join dengan tabel request
+        $this->db->where('request.unit', $unit); // Filter berdasarkan unit
+        $this->db->where('pengadaan.status_pengadaan', 'Proses Pengadaan'); // Filter berdasarkan status
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->jumlah_pengadaan;
+        } else {
+            return 0;
+        }
+    }
+
+
+
     public function laporan($table, $mulai, $akhir)
     {
         $tgl = $table == 'barang_masuk' ? 'tanggal_masuk' : 'tanggal_keluar';

@@ -40,7 +40,7 @@
                             <td><?= $key + 1; ?></td>
                             <td><a href="<?= base_url('request/detail_permintaan/') . $request['request_id'] ?>"><?= $request['request_id'] ?></a></td>
                             <td><?= $request['tgl_pengajuan']; ?></td>
-                            <td><?= $request['total_estimasi_harga']; ?></td>
+                            <td>Rp. <?= number_format($request['total_estimasi_harga'], 0, ',', '.'); ?></td>
                             <td><?= $request['status']; ?></td>
                             <!-- <td>
 

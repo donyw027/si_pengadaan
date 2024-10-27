@@ -38,6 +38,7 @@ class Dashboard extends CI_Controller
         $data['reject_kepsek'] = $this->admin->count_where_in_with_unit('request', 'status', ['Rejected Kepsek'], $unit);
         $data['acc_kepsek'] = $this->admin->count_where_in_with_unit('request', 'status', ['Rejected Kepsek'], $unit);
         $data['total_permintaan'] = $this->admin->hitung_data('request', ['unit' => $unit]);
+        $data['jumlah_pengadaan'] = $this->admin->count_konfirmasi_by_unit($unit);
 
 
 

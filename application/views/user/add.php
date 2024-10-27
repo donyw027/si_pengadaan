@@ -66,6 +66,14 @@
                         <?= form_error('no_telp', '<span class="text-danger small">', '</span>'); ?>
                     </div>
                 </div>
+
+                <div class="row form-group">
+                    <label class="col-md-4 text-md-right" for="mail_user">Email</label>
+                    <div class="col-md-6">
+                        <input value="<?= set_value('mail_user'); ?>" type="text" id="mail_user" name="mail_user" class="form-control" placeholder="Email">
+                        <?= form_error('mail_user', '<span class="text-danger small">', '</span>'); ?>
+                    </div>
+                </div>
                 <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="role">Role</label>
                     <div class="col-md-6">
@@ -123,6 +131,7 @@
 
                         <?= form_error('role', '<span class="text-danger small">', '</span>'); ?>
                     </div>
+
                 </div>
                 <br>
                 <div class="row form-group justify-content-end">

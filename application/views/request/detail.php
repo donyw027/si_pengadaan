@@ -132,19 +132,21 @@
             <?php if ($request->status == 'Pending Kepsek' || $request->status == 'Pending Yayasan') : ?>
                 <div style="text-align: right; margin: 20px">
                     <?php if (is_admin() == true || is_yys() == true) { ?>
-
+                        <a onclick="return confirm('Yakin ingin Approve Permintaan?')" href="<?= base_url('request/approve_pengadaan/' . $request->request_id); ?>" class="btn btn-success btn-sm">Approve</a>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal" onclick="setRejectModal('<?= $request->request_id; ?>')">Reject</button>
                     <?php } else { ?>
                         <a onclick="return confirm('Yakin ingin Approve Permintaan?')" href="<?= base_url('request/approve/' . $request->request_id); ?>" class="btn btn-success btn-sm">Approve</a>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal" onclick="setRejectModal('<?= $request->request_id; ?>')">Reject</button>
                     <?php } ?>
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal" onclick="setRejectModal('<?= $request->request_id; ?>')">Reject</button>
+
                 </div>
             <?php endif; ?>
         <?php endif; ?>
 
         <?php if (is_tu() == true and $request->status == 'ACC Yayasan') { ?>
             <div style="text-align: right; margin: 20px">
-                <a onclick="return confirm('Yakin ingin Approve Permintaan & Proses Pengadaan?')" href="<?= base_url('request/approve_pengadaan/' . $request->request_id); ?>" class="btn btn-success btn-sm">Konfirmasi Penerimaan</a>
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal" onclick="setRejectModal('<?= $request->request_id; ?>')">Pengaduan</button>
+                <a onclick="return confirm('Konfirmasi Pengadaan diterima?')" href="<?= base_url('request/konfirmasi_request/' . $request->request_id); ?>" class="btn btn-success btn-sm">Konfirmasi Penerimaan</a>
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModalPengaduan" onclick="setRejectModal('<?= $request->request_id; ?>')">Pengaduan</button>
             </div>
         <?php  } ?>
 
@@ -167,6 +169,32 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="note">Catatan Penolakan</label>
+                        <textarea class="form-control" id="note" name="note" rows="4" required></textarea>
+                    </div>
+                    <input type="hidden" id="request_id" name="request_id">
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rejectModalPengaduan" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="<?= base_url('Request/pengaduan'); ?>" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rejectModalLabel">Pengaduan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="note">Catatan Pengaduan</label>
                         <textarea class="form-control" id="note" name="note" rows="4" required></textarea>
                     </div>
                     <input type="hidden" id="request_id" name="request_id">
