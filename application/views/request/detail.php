@@ -146,7 +146,7 @@
         <?php if (is_tu() == true and $request->status == 'ACC Yayasan') { ?>
             <div style="text-align: right; margin: 20px">
                 <a onclick="return confirm('Konfirmasi Pengadaan diterima?')" href="<?= base_url('request/konfirmasi_request/' . $request->request_id); ?>" class="btn btn-success btn-sm">Konfirmasi Penerimaan</a>
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModalPengaduan" onclick="setRejectModal('<?= $request->request_id; ?>')">Pengaduan</button>
+                <!-- <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModalPengaduan" onclick="setRejectModal('<?= $request->request_id; ?>')">Pengaduan</button> -->
             </div>
         <?php  } ?>
 

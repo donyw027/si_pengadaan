@@ -265,34 +265,40 @@
                         <span>Data Permintaan</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('dpermintaan/pengadaan_selesai'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Pengadaan Selesai</span>
+                    </a>
+                </li>
             <?php } ?>
 
             <?php if (is_admin() == true || is_yys() == true) { ?>
 
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('dataaset/semuaaset'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('dpermintaan/lap_permintaan'); ?>">
                         <i class="fas fa-fw fa-print"></i>
                         <span>Lap. Permintaan Barang</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('datadisposal/semuadisposal'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('dpermintaan/lap_detail_permintaan'); ?>">
                         <i class="fas fa-fw fa-print"></i>
                         <span>Lap. Detail Permintaan </span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link pb-0" href="<?= base_url('dataaset/semuaaset'); ?>">
+                    <a class="nav-link pb-0" href="<?= base_url('dpermintaan/lap_pengadaan'); ?>">
                         <i class="fas fa-fw fa-print"></i>
                         <span>Lap. Pengadaan Barang</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link pb-0" href="<?= base_url('datadisposal/semuadisposal'); ?>">
                         <i class="fas fa-fw fa-print"></i>
                         <span>Lap. Detail Pengadaan </span>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link pb-0" href="<?= base_url('request/decision_log'); ?>">
                         <i class="fas fa-fw fa-folder"></i>

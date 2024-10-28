@@ -292,6 +292,44 @@ class Request extends CI_Controller
         $this->template->load('templates/dashboard', 'pengadaan/data', $data);
     }
 
+    public function konfirmasi_request($request_id)
+    {
+        $tgl_diterima = date('Y-m-d | H:i:s');
+        $status = "ACC Yayasan,Pengadaan Selesai";
+        // Update status request di database
+        $this->db->where('request_id', $request_id);
+        $this->db->update('request', ['status' => $status]);
+
+        $status_pengadaan = 'Pengadaan Selesai, Diterima Unit';
+        // Update status request di database
+        $this->db->where('request_id', $request_id);
+        $this->db->update('pengadaan', [
+            'status_pengadaan' => $status_pengadaan,
+            'tgl_diterima' => $tgl_diterima
+        ]);
+
+        // Insert log into decision_log
+        $data_log = [
+            'request_id' => $request_id,
+            'status' => $status_pengadaan,
+            'user_id' => $this->session->userdata('login_session')['user'], // Nama user yang approve
+            'tgl' => date('Y-m-d | H:i:s'), // Waktu saat ini
+        ];
+
+        // Insert ke tabel decision_log
+        $this->db->insert('decision_log', $data_log);
+
+        // if ($status === 'Pending Yayasan') {
+        //     $this->kirim_email_to_acc_yayasan($request_id);
+        // }
+
+
+        // Redirect kembali ke halaman approval dengan pesan sukses
+        $this->session->set_flashdata('pesan', 'Konfirmasi Penerimaan Berhasil.');
+
+        redirect('request/pengadaan_list');
+    }
+
     public function approve($request_id)
     {
 
@@ -329,6 +367,8 @@ class Request extends CI_Controller
         redirect('dpermintaan/approve_permintaan');
     }
 
+
+
     private function kirim_email_to_acc_yayasan($request_id)
     {
         $approve_by = $this->session->userdata('login_session')['nama'];
@@ -336,7 +376,7 @@ class Request extends CI_Controller
         // Ambil data email dari tabel user
         $this->db->select('mail_user');
         $this->db->from('user');
-        $this->db->where('role', 'yys'); // Asumsikan role yayasan menggunakan nama 'yayasan'
+        $this->db->where('role', 'yys');
         $email_yayasan = $this->db->get()->row()->mail_user;
 
         // Konfigurasi email
@@ -349,11 +389,12 @@ class Request extends CI_Controller
         $message = "Permintaan Pengadaan dengan Request ID " . $request_id . " yang diajukan Tata Usaha telah di-ACC oleh Kepala Sekolah Unit. (Cek Request ID Dalam Sistem Pengadaan Untuk Approve/Reject Request) <br>Approve By : " . $approve_by . "<br><br> Message By SI Pengadaan Yayasan Diannanda";
         $this->email->message($message);
 
-        // Kirim email
+        // Kirim email dan tampilkan debug jika gagal
         if ($this->email->send()) {
             log_message('info', 'Email pemberitahuan berhasil dikirim ke yayasan');
         } else {
             log_message('error', 'Gagal mengirim email ke yayasan');
+            echo $this->email->print_debugger(); // Tambahkan ini untuk melihat pesan kesalahan
         }
     }
 
@@ -401,7 +442,8 @@ class Request extends CI_Controller
         $this->db->join('user', 'user.no_telp = request.unit');  // Menyesuaikan kolom join sesuai tabel
         $this->db->where('request.request_id', $request_id);
         $unit_info = $this->db->get()->result_array();  // Mengambil sebagai array dari semua data
-
+        // var_dump($unit_info);
+        // die();
         // Loop untuk mengirim email ke setiap email yang ditemukan
         foreach ($unit_info as $unit) {
             $email_unit = $unit['mail_user'];
@@ -416,11 +458,12 @@ class Request extends CI_Controller
             $message = "Permintaan Pengadaan dengan Request ID " . $request_id . " telah di-tolak oleh Yayasan. (Periksa Catatan Dalam Sistem)<br>Reject By : " . $reject_by . " <br> <br> Message By SI Pengadaan Yayasan Diannanda";
             $this->email->message($message);
 
-            // Kirim email
             if ($this->email->send()) {
                 log_message('info', 'Email pemberitahuan berhasil dikirim ke unit yang mengajukan request');
             } else {
-                log_message('error', 'Gagal mengirim email ke unit yang mengajukan request');
+                // Tampilkan error pada log
+                $error_message = $this->email->print_debugger(['headers']);
+                log_message('error', 'Gagal mengirim email ke unit yang mengajukan request. Error: ' . $error_message);
             }
         }
     }

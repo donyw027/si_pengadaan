@@ -193,6 +193,28 @@ class Admin_model extends CI_Model
             $this->db->where('request.unit', $unit);
         }
 
+        // Filter untuk status pengadaan 'Proses Pengadaan'
+        $this->db->where('pengadaan.status_pengadaan', 'Proses Pengadaan');
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_pengadaan_selesai($unit = null)
+    {
+        $this->db->select('pengadaan.id, pengadaan.request_id, pengadaan.tgl_pengadaan, pengadaan.status_pengadaan, pengadaan.tgl_diterima, request.unit, request.tgl_pengajuan, user.nama as nama_penerima');
+        $this->db->from('pengadaan');
+        $this->db->join('request', 'pengadaan.request_id = request.request_id', 'left');
+        $this->db->join('user', 'pengadaan.penerima = user.id_user', 'left'); // Assuming user_id is in pengadaan
+
+        // Tambahkan filter unit jika diberikan
+        if ($unit !== null) {
+            $this->db->where('request.unit', $unit);
+        }
+
+        // Filter untuk status pengadaan 'Proses Pengadaan'
+        $this->db->where('pengadaan.status_pengadaan', 'Pengadaan Selesai, Diterima Unit');
+
         $query = $this->db->get();
         return $query->result();
     }

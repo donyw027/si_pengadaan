@@ -27,6 +27,60 @@ class Dpermintaan extends CI_Controller
         $this->template->load('templates/dashboard', 'dpermintaan/data', $data);
     }
 
+    public function lap_permintaan()
+    {
+
+        $data['title'] = "Laporan All Data Permintaan";
+        // $role = $this->session->userdata('login_session')['role'];
+        $unit = $this->session->userdata('login_session')['no_telp'];
+
+        if (is_admin() == true || is_yys() == true) {
+            $data['request'] = $this->admin->get('request');
+        }
+        $this->template->load('templates/dashboard', 'lap_permintaan/data', $data);
+    }
+
+    public function lap_detail_permintaan()
+    {
+
+        $data['title'] = "Laporan Data Detail Permintaan";
+        // $role = $this->session->userdata('login_session')['role'];
+        $unit = $this->session->userdata('login_session')['no_telp'];
+
+        if (is_admin() == true || is_yys() == true) {
+            $data['request'] = $this->admin->get('request_item');
+        }
+        $this->template->load('templates/dashboard', 'lap_detail_permintaan/data', $data);
+    }
+
+    public function lap_pengadaan()
+    {
+
+        $data['title'] = "Laporan All Data pengadaan";
+        // $role = $this->session->userdata('login_session')['role'];
+        $unit = $this->session->userdata('login_session')['no_telp'];
+
+        if (is_admin() == true || is_yys() == true) {
+            $data['pengadaan'] = $this->admin->get('pengadaan');
+        }
+        $this->template->load('templates/dashboard', 'lap_pengadaan/data', $data);
+    }
+
+    public function pengadaan_selesai()
+    {
+
+        $data['title'] = "Data Pengadaan yang diterima";
+        // $role = $this->session->userdata('login_session')['role'];
+        $unit = $this->session->userdata('login_session')['no_telp'];
+
+        $data['pengadaan'] = $this->admin->get_pengadaan_selesai($unit);
+
+
+
+
+        $this->template->load('templates/dashboard', 'pengadaan_selesai/data', $data);
+    }
+
     public function approve_permintaan()
     {
 
