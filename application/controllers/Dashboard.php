@@ -29,8 +29,9 @@ class Dashboard extends CI_Controller
 
         $data['pending_yayasan'] = $this->admin->hitung_data('request', ['status' => 'Pending Yayasan']);
         $data['reject_yayasan'] = $this->admin->hitung_data('request', ['status' => 'Rejected Yayasan']);
-        $data['acc_yayasan'] = $this->admin->hitung_data('request', ['status' => 'ACC Yayasan']);
-        $data['pengadaan'] = $this->admin->hitung_data('pengadaan');
+        $data['acc_yayasan'] = $this->admin->hitung_data('request', ['status' => ['ACC Yayasan', 'ACC Yayasan,Pengadaan Selesai']]);
+
+        $data['pengadaan'] = $this->admin->hitung_data('pengadaan', ['status_pengadaan' => 'Proses Pengadaan']);
 
 
         $data['pending_kepsek'] = $this->admin->count_where_in_with_unit('request', 'status', ['Pending Kepsek'], $unit);
@@ -43,7 +44,9 @@ class Dashboard extends CI_Controller
 
 
         $data['pending_tu'] = $this->admin->count_where_in_with_unit('request', 'status', ['Pending Yayasan', 'Pending Kepsek'], $unit);
-        $data['acc_tu'] = $this->admin->hitung_data('request', ['status' => 'ACC Yayasan', 'unit' => $unit]);
+        $status_conditions = ['ACC Yayasan', 'ACC Yayasan,Pengadaan Selesai'];
+        $data['acc_tu'] = $this->admin->hitung_data('request', ['status' => $status_conditions, 'unit' => $unit]);
+
         $data['reject_tu'] = $this->admin->count_where_in_with_unit('request', 'status', ['Rejected yayasan', 'Rejected kepsek'], $unit);
         $data['catatan_tu'] = $this->admin->count_catatan_with_request_id_like_unit('catatan', $unit);
 

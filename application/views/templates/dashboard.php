@@ -207,12 +207,12 @@
                         <span>Approval Request</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link pb-0" href="<?= base_url('request/decision_log'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Approval Log</span>
                     </a>
-                </li>
+                </li> -->
             <?php } ?>
 
             <?php if (is_tu() == true || is_kepsek() == true) { ?>
@@ -299,12 +299,12 @@
                         <span>Lap. Detail Pengadaan </span>
                     </a>
                 </li> -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link pb-0" href="<?= base_url('request/decision_log'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Approval Log</span>
                     </a>
-                </li>
+                </li> -->
             <?php } ?>
             <br>
 
@@ -319,11 +319,6 @@
                     Settings
                 </div>
 
-
-
-
-
-
                 <li class="nav-item">
                     <a class="nav-link pb-0" href="<?= base_url('request/decision_log'); ?>">
                         <i class="fas fa-fw fa-folder"></i>
@@ -331,13 +326,15 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link pb-0" href="<?= base_url('user/log'); ?>">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Log Sistem</span>
+                    </a>
+                </li>
+
                 <?php if ($this->session->userdata('login_session')['nama'] == 'doni') { ?>
-                    <li class="nav-item">
-                        <a class="nav-link pb-0" href="<?= base_url('user/log'); ?>">
-                            <i class="fas fa-fw fa-folder"></i>
-                            <span>Log Sistem</span>
-                        </a>
-                    </li>
+
 
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('user'); ?>">

@@ -30,6 +30,7 @@
                     <th>Tanggal Pengadaan</th>
                     <th>Status Pengadaan</th>
                     <th>Tanggal Diterima</th>
+                    <th>Aksi</th>
                     <!-- <th>Nama Penerima</th> -->
                 </tr>
             </thead>
@@ -43,6 +44,10 @@
                             <td><?= $item->tgl_pengadaan ?></td>
                             <td><?= $item->status_pengadaan ?></td>
                             <td><?= $item->tgl_diterima ?></td>
+                            <td>
+
+                                <a href="<?= base_url('dpermintaan/print_data_pengadaan/') . $item->request_id ?>" class="btn btn-circle btn-sm btn-warning" target="_blank"><i class="fa fa-fw fa-print"></i></a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

@@ -78,6 +78,15 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
+    public function get_decision_logs_where_reqid($request_id = null)
+    {
+        $this->db->select('decision_log.*, user.nama as nama_user');
+        $this->db->from('decision_log');
+        $this->db->join('user', 'decision_log.user_id = user.id_user', 'left');
+        $this->db->where('decision_log.request_id', $request_id);
+        return $this->db->get()->result();
+    }
+
 
 
     public function get_all_payrolls()
@@ -155,16 +164,60 @@ class Admin_model extends CI_Model
         return $this->db->count_all($table);
     }
 
+    // public function hitung_data($table, $condition = null)
+    // {
+    //     // Jika kondisi diberikan, tambahkan klausa WHERE
+    //     if ($condition !== null) {
+    //         $this->db->where($condition);
+    //     }
+
+    //     // Hitung jumlah baris
+    //     return $this->db->count_all_results($table);
+    // }
+
     public function hitung_data($table, $condition = null)
     {
         // Jika kondisi diberikan, tambahkan klausa WHERE
         if ($condition !== null) {
+            // Jika condition adalah array dengan key 'status', gunakan where_in
+            if (isset($condition['status']) && is_array($condition['status'])) {
+                $this->db->where_in('status', $condition['status']);
+                unset($condition['status']); // Hapus 'status' dari condition setelah where_in
+            }
+            // Terapkan kondisi lainnya (selain status) jika ada
             $this->db->where($condition);
         }
 
         // Hitung jumlah baris
         return $this->db->count_all_results($table);
     }
+
+    public function hitung_data_acc_tu($table, $condition = null)
+    {
+        // Jika kondisi diberikan, tambahkan klausa WHERE
+        if ($condition !== null) {
+            // Jika condition adalah array dengan key 'status', gunakan where_in untuk status
+            if (isset($condition['status'])) {
+                if (is_array($condition['status'])) {
+                    $this->db->group_start(); // Mulai group untuk status
+                    $this->db->where_in('status', $condition['status']);
+                    $this->db->group_end(); // Tutup group
+                } else {
+                    $this->db->where('status', $condition['status']);
+                }
+                unset($condition['status']); // Hapus 'status' dari condition setelah where_in
+            }
+
+            // Terapkan kondisi lainnya (selain status) jika ada
+            if (!empty($condition)) {
+                $this->db->where($condition);
+            }
+        }
+
+        // Hitung jumlah baris
+        return $this->db->count_all_results($table);
+    }
+
 
     public function count_where_in_with_unit($table, $column, $values, $unit)
     {

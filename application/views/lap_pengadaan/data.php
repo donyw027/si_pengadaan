@@ -30,6 +30,7 @@
                     <th>Tanggal Proses Pengadaan</th>
                     <th>Status Pengadaan</th>
                     <th>Tanggal diterima Unit</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,11 +46,10 @@
                             <td><?= $pengadaans['tgl_pengadaan']; ?></td>
                             <td><?= $pengadaans['status_pengadaan']; ?></td>
                             <td><?= $pengadaans['tgl_diterima']; ?></td>
-                            <!-- <td>
+                            <td>
 
-                                <a href="<?= base_url('pengadaan/edit/') . $pengadaans['id'] ?>" class="btn btn-circle btn-sm btn-warning"><i class="fa fa-fw fa-edit"></i></a>
-                                <a onclick="return confirm('Yakin ingin menghapus data?')" href="<?= base_url('pengadaan/delete/') . $pengadaans['id'] ?>" class="btn btn-circle btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i></a>
-                            </td> -->
+                                <a href="<?= base_url('dpermintaan/print_data_pengadaan/') . $pengadaans['request_id'] ?>" class="btn btn-circle btn-sm btn-warning" target="_blank"><i class="fa fa-fw fa-print"></i></a>
+                            </td>
                         </tr>
                     <?php endforeach;
                 else : ?>

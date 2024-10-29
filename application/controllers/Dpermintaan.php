@@ -75,12 +75,27 @@ class Dpermintaan extends CI_Controller
 
         $data['pengadaan'] = $this->admin->get_pengadaan_selesai($unit);
 
-
-
-
         $this->template->load('templates/dashboard', 'pengadaan_selesai/data', $data);
     }
 
+    public function print_data_pengadaan($request_id)
+    {
+        $data['request'] = $this->admin->get_where('request', ['request_id' => $request_id])->row();
+        $data['pengadaan'] = $this->admin->get_where('pengadaan', ['request_id' => $request_id])->row();
+        $data['request_item'] = $this->admin->get_where('request_item', ['request_id' => $request_id])->result();
+        // $data['decision_log'] = $this->admin->get_where('decision_log', ['request_id' => $request_id])->result();
+        $data['decision_log'] = $this->admin->get_decision_logs_where_reqid($request_id);
+
+        // var_dump($data['decision_log']);
+        // die();
+
+        // var_dump($data['pengadaan']);
+        // die();
+
+        // Muat halaman tampilan cetak
+        // $this->load->view('dpermintaan/print_data_pengadaan', $data);
+        $this->template->load('templates/form_pengadaan', 'pengadaan/form_pengadaan', $data);
+    }
     public function approve_permintaan()
     {
 

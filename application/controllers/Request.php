@@ -108,11 +108,11 @@ class Request extends CI_Controller
 
         // var_dump($unit);
         // die();
+        $unit = $this->session->userdata('login_session')['no_telp'];
 
         if (is_admin() == true || is_yys() == true) {
             $data['catatan'] = $this->admin->get_notes_with_details();
         } else {
-            $unit = $this->session->userdata('login_session')['no_telp'];
             $data['catatan'] = $this->admin->get_notes_with_details($unit);
         }
 
@@ -129,6 +129,8 @@ class Request extends CI_Controller
         $this->db->select('*');
         $this->db->from('request');
         $this->db->where('status', 'Acc Yayasan');
+        $this->db->or_where('status', 'ACC Yayasan,Pengadaan Selesai');
+
 
         // // Jika perlu, tambahkan filter berdasarkan unit
         // $this->db->where('unit', $unit);
@@ -245,7 +247,8 @@ class Request extends CI_Controller
             'request_id' => $request_id,
             'status' => $status,
             'user_id' => $this->session->userdata('login_session')['user'], // Nama user yang approve
-            'tgl' => date('Y-m-d | H:i:s'), // Waktu saat ini
+            'tgl' => date('Y-m-d | H:i'), // Waktu saat ini
+            'tgl' => date('Y-m-d | H:i'), // Waktu saat ini
         ];
 
         // Insert ke tabel decision_log
@@ -294,7 +297,7 @@ class Request extends CI_Controller
 
     public function konfirmasi_request($request_id)
     {
-        $tgl_diterima = date('Y-m-d | H:i:s');
+        $tgl_diterima = date('Y-m-d | H:i');
         $status = "ACC Yayasan,Pengadaan Selesai";
         // Update status request di database
         $this->db->where('request_id', $request_id);
@@ -313,7 +316,7 @@ class Request extends CI_Controller
             'request_id' => $request_id,
             'status' => $status_pengadaan,
             'user_id' => $this->session->userdata('login_session')['user'], // Nama user yang approve
-            'tgl' => date('Y-m-d | H:i:s'), // Waktu saat ini
+            'tgl' => date('Y-m-d | H:i'), // Waktu saat ini
         ];
 
         // Insert ke tabel decision_log
@@ -350,7 +353,7 @@ class Request extends CI_Controller
             'request_id' => $request_id,
             'status' => $status,
             'user_id' => $this->session->userdata('login_session')['user'], // Nama user yang approve
-            'tgl' => date('Y-m-d | H:i:s'), // Waktu saat ini
+            'tgl' => date('Y-m-d | H:i'), // Waktu saat ini
         ];
 
         // Insert ke tabel decision_log
@@ -481,7 +484,7 @@ class Request extends CI_Controller
         // Data untuk tabel catatan
         $data_note = [
             'request_id' => $request_id,
-            'tgl_note' => date('Y-m-d | H:i:s'),
+            'tgl_note' => date('Y-m-d | H:i'),
             'note' => $note,
             'user_id' => $user_id
         ];
@@ -504,7 +507,7 @@ class Request extends CI_Controller
             'request_id' => $request_id,
             'status' => $status,
             'user_id' => $this->session->userdata('login_session')['user'], // Nama user yang approve
-            'tgl' => date('Y-m-d | H:i:s'), // Waktu saat ini
+            'tgl' => date('Y-m-d | H:i'), // Waktu saat ini
         ];
 
         // Insert ke tabel decision_log
