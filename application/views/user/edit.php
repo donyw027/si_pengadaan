@@ -8,7 +8,7 @@
                             Form <?= $title; ?>
                         </h4>
                     </div>
-                    <div class="col-auto">
+                    <!-- <div class="col-auto">
                         <a href="<?= base_url('user') ?>" class="btn btn-sm btn-secondary btn-icon-split">
                             <span class="icon">
                                 <i class="fa fa-arrow-left"></i>
@@ -17,7 +17,7 @@
                                 Kembali
                             </span>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="card-body pb-2">

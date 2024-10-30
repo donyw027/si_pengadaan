@@ -74,7 +74,9 @@
                  <div class="row no-gutters align-items-center">
                      <div class="col mr-2">
                          <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Permintaan pengadaan</div>
-                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $pending_tu; ?></div>
+                         <div class="h5 mb-0 font-weight-bold text-gray-800">
+                             <a href="<?= base_url('request/pending/') ?>"> <?= $pending_tu; ?></a>
+                         </div>
                      </div>
                      <div class="col-auto">
                          <i class="fas fa-folder fa-2x text-gray-300"></i>
@@ -127,7 +129,9 @@
                  <div class="row no-gutters align-items-center">
                      <div class="col mr-2">
                          <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Konfirmasi Penerimaan Barang</div>
-                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $jumlah_pengadaan; ?></div>
+                         <div class="h5 mb-0 font-weight-bold text-gray-800">
+                             <a href="<?= base_url('request/pengadaan_list/') ?>"> <?= $jumlah_pengadaan; ?></a>
+                         </div>
                      </div>
                      <div class="col-auto">
                          <i class="fas fa-folder fa-2x text-gray-300"></i>
@@ -143,7 +147,10 @@
                  <div class="row no-gutters align-items-center">
                      <div class="col mr-2">
                          <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Catatan Permintaan</div>
-                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $catatan_tu; ?></div>
+                         <div class="h5 mb-0 font-weight-bold text-gray-800">
+
+                             <a href="<?= base_url('request/catatan/') ?>"> <?= $catatan_tu; ?></a>
+                         </div>
                      </div>
                      <div class="col-auto">
                          <i class="fas fa-folder fa-2x text-gray-300"></i>

@@ -17,7 +17,7 @@
                     </span>
                 </a>
             </div> -->
-            <div class="col-auto">
+            <!-- <div class="col-auto">
                 <a href="<?= base_url('histori_sj') ?>" class="btn btn-sm btn-secondary btn-icon-split">
                     <span class="icon">
                         <i class="fa fa-arrow-left"></i>
@@ -26,7 +26,7 @@
                         Kembali
                     </span>
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="table-responsive">
